@@ -2,6 +2,7 @@ package com.youtube.demo.controller;
 
 import java.io.IOException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ public class UserController {
 	
 	protected ObjectMapper objectMapper;
 	
-	@RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveorupdate", method = RequestMethod.POST)
 	public RestResponse saveOrUpdate(@RequestBody String userJson) throws JsonParseException, JsonMappingException, IOException{
 		this.objectMapper = new ObjectMapper();
 		UserEntity userEntity = this.objectMapper.readValue(userJson, UserEntity.class);
@@ -41,15 +42,15 @@ public class UserController {
 	private boolean validate(UserEntity userEntity){
 		boolean isValid = true;
 		
-		if(userEntity.getFirstName() == null){
+		if(StringUtils.trimToNull(userEntity.getFirstName()) == null){
 			isValid = false;
 		}
 		
-		if(userEntity.getFirstSurname() == null){
+		if(StringUtils.trimToNull(userEntity.getFirstSurname()) == null){
 			isValid = false;
 		}
 		
-		if(userEntity.getAddress() == null){
+		if(StringUtils.trimToNull(userEntity.getAddress()) == null){
 			isValid = false;
 		}
 		
